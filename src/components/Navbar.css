@@ -1,80 +1,166 @@
 /* 🔹 Navbar Container */
 .navbar {
     background-color: #007bff;
-    position: fixed;
-    width: 100vw; /* Ensure it does not exceed screen width */
+    position: sticky;
     top: 0;
     left: 0;
+    width: 100%;
     z-index: 1000;
     padding: 15px 30px;
-    overflow: hidden; /* Prevent any extra spacing */
     box-sizing: border-box;
-}
-
-/* 🔹 Navbar Layout */
-.navbar-container {
+  }
+  
+  /* 🔹 Navbar Layout */
+  .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 100%; /* Prevents overflow */
-    padding: 0 20px; /* Adds spacing but avoids overflow */
+    max-width: 1200px;
     margin: 0 auto;
     box-sizing: border-box;
-    overflow: hidden;
-}
-
-
-/* 🔹 Logo */
-.navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+  }
+  
+  /* 🔹 Logo */
+  .navbar-logo {
+    font-size: 1.8rem;
+    font-weight: 600;
     color: white;
-}
-
-/* 🔹 Navigation Links */
-.nav-links {
+    text-decoration: none;
+  }
+  
+  /* 🔹 Navigation Links */
+  .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
-}
-
-.nav-links li {
-    display: inline;
-}
-
-.nav-links a {
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-link {
     text-decoration: none;
     color: white;
     font-size: 1.1rem;
     padding: 10px 15px;
-    font-weight: bold;
-    transition: 0.3s ease-in-out;
-}
-
-.nav-links a:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .navbar-container {
-        flex-direction: column;
-        text-align: center;
-        width: 100%; /* Ensures it adapts */
-        padding: 10px;
-    }
-
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-link:hover {
+    color: #e0f2fe;
+  }
+  
+  /* 🔹 Hamburger Menu */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+  }
+  
+  .hamburger-box {
+    width: 30px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+  }
+  
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+  }
+  
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    content: "";
+    display: block;
+  }
+  
+  .hamburger-inner::before {
+    top: -8px;
+  }
+  
+  .hamburger-inner::after {
+    bottom: -8px;
+  }
+  
+  /* Hamburger active state */
+  .hamburger.active .hamburger-inner {
+    transform: rotate(45deg);
+  }
+  
+  .hamburger.active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+  }
+  
+  .hamburger.active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+  }
+  
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 15px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
     .nav-links {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 10px;
-        width: 100%; /* Ensures it stays inside */
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background-color: #007bff;
     }
-
-    .nav-links a {
-        font-size: 1rem;
-        padding: 8px;
-        display: block;
-        white-space: nowrap; /* Prevents text from wrapping incorrectly */
+  
+    .hamburger {
+      display: flex;
     }
-}
-
+  
+    .navbar-container {
+      flex-direction: row;
+    }
+  
+    .navbar-logo {
+      margin-right: auto;
+    }
+  
+    .nav-link {
+      padding: 12px 20px;
+      font-size: 1.1rem;
+    }
+  }
