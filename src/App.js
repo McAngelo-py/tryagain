@@ -1,19 +1,35 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Announcements from "./components/Announcements"; // ✅ Correct
-import Hero from "./components/Hero";
-import About from "./components/About";
+import MainPage from "./mainpage/MainPage"; // ✅ Use MainPage instead
+import Login from "./login/Login";
+import Signup from "./login/Signup";
+import AdminDashboard from "./admin/AdminDashboard";
+
 
 function App() {
   return (
     <Router>
-      <Navbar />
-      <Hero />
-      <Announcements /> {/* Add Announcements section below Hero */}
-      <About />
+      <MainContent />
     </Router>
   );
 }
+
+const MainContent = () => {
+  const location = useLocation();
+  const hideNavbar = ["/login", "/signup", "/admin-dashboard"].includes(location.pathname);
+
+  return (
+    <>
+      {!hideNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<MainPage />} /> {/* ✅ Show all sections */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      </Routes>
+    </>
+  );
+};
 
 export default App;

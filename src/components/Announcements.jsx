@@ -14,7 +14,7 @@ const announcements = [
   { id: 2, image: announcement2, title: "Financial Assistance Update", description: "New guidelines for financial assistance have been released.", link: "https://www.youtube.com/watch?v=TIzBuvdLgbg" },
   { id: 3, image: announcement3, title: "Health Benefits Registration", description: "Enroll now to avail free health benefits for solo parents.", link: "https://www.youtube.com/watch?v=TIzBuvdLgbg" },
   { id: 4, image: announcement4, title: "Upcoming Community Event", description: "Join us for a special solo parents gathering this month!", link: "https://www.youtube.com/watch?v=TIzBuvdLgbg" },
-  { id: 5, image: announcement5, title: "Government Housing Support", description: "New housing support options are now available for solo parents.", link: "/housing-support" },
+  { id: 5, image: announcement5, title: "Government Housing Support", description: "New housing support options are now available for solo parents.", link: "https://www.youtube.com/watch?v=TIzBuvdLgbg" },
 ];
 
 const Announcements = () => {

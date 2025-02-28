@@ -1,0 +1,121 @@
+/* 🔹 Fullscreen Centered Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+}
+
+/* 🔹 Login Box */
+.login-box {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 380px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 🔹 Decorative Accent */
+.login-box::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: #007bff;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+/* 🔹 Title */
+.login-box h2 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* 🔹 Input Fields */
+.input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 🔹 Forgot Password */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.forgot-password a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* 🔹 Login Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #004494);
+    transform: translateY(-2px);
+}
+
+/* 🔹 Signup Text */
+.signup-text {
+    margin-top: 1rem;
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
