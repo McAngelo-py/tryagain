@@ -29,7 +29,7 @@ const Login = () => {
       if (foundUser.role === "admin") {
         navigate("/admin-dashboard"); // ✅ Admin goes to Admin Dashboard
       } else {
-        navigate("/"); // ✅ Regular user goes to Homepage
+        navigate("/userui"); // ✅ Regular user goes to Homepage
       }
     } else {
       setError("Invalid email or password. Please try again.");

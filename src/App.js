@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import MainPage from "./mainpage/MainPage"; // ✅ Use MainPage instead
+import MainPage from "./mainpage/MainPage";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
 import AdminDashboard from "./admin/AdminDashboard";
-
+import Userui from "./user/Userui";
 
 function App() {
   return (
@@ -17,16 +17,17 @@ function App() {
 
 const MainContent = () => {
   const location = useLocation();
-  const hideNavbar = ["/login", "/signup", "/admin-dashboard"].includes(location.pathname);
+  const hideNavbar = ["/admin-dashboard","/userui"].includes(location.pathname);
 
   return (
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<MainPage />} /> {/* ✅ Show all sections */}
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/userui" element={<Userui />} /> {/* ✅ Ensure Correct Path */}
       </Routes>
     </>
   );
