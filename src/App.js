@@ -17,7 +17,7 @@ function App() {
 
 const MainContent = () => {
   const location = useLocation();
-  const hideNavbar = ["/admin-dashboard","/userui"].includes(location.pathname);
+  const hideNavbar = ["/admin-dashboard","/userui","/login","/signup"].includes(location.pathname);
 
   return (
     <>

@@ -22,7 +22,7 @@ const Hero = () => {
           <p>Providing assistance and welfare programs for solo parents.</p>
           <div className="hero-buttons">
             {/* ✅ Updated Login button to navigate to /login */}
-            <button className="login" onClick={() => navigate("/login")}>
+            <button className="login-hero" onClick={() => navigate("/login")}>
               Login
             </button>
             <button className="learn-more" onClick={scrollToAbout}>

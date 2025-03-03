@@ -121,11 +121,23 @@
   transition: all 0.3s ease;
 }
 
-.hero-buttons .login:hover {
+/* Login Button */
+.hero-buttons .login-hero {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+  transition: all 0.3s ease;
+  padding: 14px 50px; /* ✅ Increased padding for better length */
+  min-width: 170px; /* ✅ Ensures button does not shrink too much */
+  text-align: center;
+}
+
+.hero-buttons .login-hero:hover {
   background: linear-gradient(135deg, #0056b3, #004085);
   transform: scale(1.07);
   box-shadow: 0 10px 30px rgba(0, 123, 255, 0.6);
 }
+
 
 /* Learn More Button */
 .hero-buttons .learn-more {

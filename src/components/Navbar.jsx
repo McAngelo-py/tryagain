@@ -14,6 +14,21 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+  const scrollToContacts = (e) => {
+    e.preventDefault();
+    const contactsSection = document.getElementById("contacts");
+    if (contactsSection) {
+      contactsSection.scrollIntoView({ behavior: "smooth" });
+    }
+    setMenuOpen(false);
+  };
+
+  const scrollToTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setMenuOpen(false);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -35,9 +50,9 @@ const Navbar = () => {
 
         {/* ✅ Navigation Menu */}
         <ul className={`nav-links ${menuOpen ? "open" : ""}`} onClick={(e) => e.stopPropagation()}>
-          <li><Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/" className="nav-link" onClick={scrollToTop}>Home</Link></li>
           <li><Link to="/about" className="nav-link" onClick={scrollToAbout}>About</Link></li>
-          <li><Link to="/profile" className="nav-link" onClick={() => setMenuOpen(false)}>Profile</Link></li>
+          <li><Link to="/Contacts" className="nav-link" onClick={scrollToContacts}>Contacts</Link></li>
         </ul>
       </div>
     </nav>

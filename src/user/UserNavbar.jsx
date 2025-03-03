@@ -68,7 +68,6 @@ const UserNavbar = () => {
         {/* ✅ Navigation Links */}
         <ul className={`nav-links ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)}>
           <li><Link to="/track">Track</Link></li>
-          <li><Link to="/about">About</Link></li>
           <li className="logout-item">
             <button onClick={() => setShowLogoutPopup(true)}>Logout</button>
           </li>

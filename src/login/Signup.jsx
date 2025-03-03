@@ -1,24 +1,38 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
+  const [error, setError] = useState(""); // ✅ State for error message
   const navigate = useNavigate(); // ✅ Navigation hook
 
   // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    // ✅ Clear error message when user types
+    if (e.target.name === "confirmPassword") {
+      setError("");
+    }
   };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Account Created:", formData); // Simulating account creation ✅
+
+    // ✅ Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    console.log("Account Created:", formData); // ✅ Simulating account creation
 
     // Redirect user back to homepage
     navigate("/");
@@ -49,7 +63,18 @@ const Signup = () => {
               onChange={handleChange}
             />
           </div>
-          <button type="submit">Create Account</button>
+          <div className="input-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              required
+              onChange={handleChange}
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>} {/* ✅ Display error if passwords don't match */}
+          <button type="submit" disabled={error} className="signup-btn">Create Account</button>
         </form>
         <p className="login-text">
           Already have an account? <a href="/login">Login</a>

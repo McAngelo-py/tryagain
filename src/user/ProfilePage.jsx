@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css"; // Import CSS file
 
 // ✅ Import images
 import avatar from "../assets/avatar.jpg";
 import idPic from "../assets/idpic.png"; // Use exact case!
 
-
-
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("Details"); // ✅ Default to "Details"
+  const navigate = useNavigate();
 
   // ✅ Dummy user data (Replace with API data)
   const user = {
@@ -16,9 +16,17 @@ const ProfilePage = () => {
     email: "juan@example.com",
     profilePic: avatar,
     idPic: idPic, // ✅ Correctly added idPic
-    status: "Approved",
-    documents: ["Name: Juan Dela Cruz", "Age: 21","Place of Birth: Sta.cruz Laguna","Gender: Male","Email: juan@example.com"],
-    benefits: ["Monthly Allowance", "Scholarship"],
+    status: "", // Empty status for testing
+    documents: [], // Empty documents for testing
+    benefits: [],
+  };
+
+  // ✅ Determine user status based on available data
+  const userHasData = user.name && user.email && user.documents.length > 0;
+  const status = userHasData ? "approved" : "Unverified";
+
+  const handleApplicationClick = () => {
+    navigate("/application-form", { state: { user } });
   };
 
   return (
@@ -27,9 +35,9 @@ const ProfilePage = () => {
       <div className="profile-header">
         <img src={user.profilePic} alt="Profile" className="profile-pic" />
         <div>
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-          <p className={`status ${user.status.toLowerCase()}`}>Status: {user.status}</p>
+          <h2>{user.name || "Unverified"}</h2>
+          <p>{user.email || "Unverified"}</p>
+          <p className={`status ${status.toLowerCase()}`}>Status: {status}</p>
         </div>
       </div>  
 
@@ -50,23 +58,32 @@ const ProfilePage = () => {
       <div className="tab-content">
         {activeTab === "Details" && (
           <ul>
-            {user.documents.map((doc, index) => (
-              <li key={index}>{doc}</li>
-            ))}
-            <button className="edit-button">Send Application</button>
+            {user.documents.length > 0 ? (
+              user.documents.map((doc, index) => <li key={index}>{doc}</li>)
+            ) : (
+              <li>Unverified</li>
+            )}
+            {user.documents.length === 0 && (
+              <button className="application-button" onClick={handleApplicationClick}>Send Application</button>
+            )}
           </ul>
         )}
         {activeTab === "benefits" && (
           <ul>
-            {user.benefits.map((benefit, index) => (
-              <li key={index}>{benefit}</li>
-            ))}
+            {user.benefits.length > 0 ? (
+              user.benefits.map((benefit, index) => <li key={index}>{benefit}</li>)
+            ) : (
+              <li>Unverified</li>
+            )}
           </ul>
         )}
         {activeTab === "ID" && (
           <div className="id-container">
-            <img src={user.idPic} alt="ID" className="id-pic" />
-            
+            {user.idPic ? (
+              <img src={user.idPic} alt="ID" className="id-pic" />
+            ) : (
+              <p>Unverified</p>
+            )}
           </div>
         )}
       </div>
