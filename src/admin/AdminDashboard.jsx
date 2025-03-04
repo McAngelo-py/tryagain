@@ -5,13 +5,9 @@ import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   return (
-    <div className="admin-dashboard">
-      {/* Sidebar */}
+    <div className="admin-dashboard"> 
       <AdminSideBar />
-
-      {/* Main Content */}
       <div className="main-content">
-        
         <section className="dashboard-content">
           <Dashboard />
         </section>

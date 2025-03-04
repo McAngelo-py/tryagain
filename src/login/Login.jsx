@@ -11,7 +11,7 @@ const Login = () => {
   // 🔹 Temporary accounts for testing
   const users = [
     { email: "admin@example.com", password: "admin123", role: "admin" },
-    { email: "user@example.com", password: "user123", role: "user" },
+    { email: "nomad@example.com", password: "nomad123", role: "user" },
   ];
 
   // 🔹 Handle login
