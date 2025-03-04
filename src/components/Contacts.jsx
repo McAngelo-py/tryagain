@@ -18,7 +18,7 @@ const Contacts = () => {
           <FaPhone className="contact-icon" />
           <div>
             <h3>Phone</h3>
-            <p>+63 912 345 6789</p>
+            <p>(049)501-1611</p>
           </div>
         </div>
 
@@ -26,7 +26,7 @@ const Contacts = () => {
           <FaMapMarkerAlt className="contact-icon" />
           <div>
             <h3>Address</h3>
-            <p>Santa Maria, Laguna</p>
+            <p>Poblacion II, Santa Maria, Laguna</p>
           </div>
         </div>
       </div>

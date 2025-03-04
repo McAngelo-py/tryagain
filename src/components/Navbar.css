@@ -57,33 +57,39 @@
   color: #e0f2fe;
 }
 
-/* 🔹 Hamburger Menu */
+/* 🔹 Default State - No Border */
 .hamburger {
-  background: transparent;
+  outline: none;
+  box-shadow: none;
   border: none;
+  background: transparent;
   padding: 0;
-  cursor: pointer;
-  display: none; /* Hide by default on larger screens */
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 30px;
   height: 24px;
+  cursor: pointer;
 }
 
-/* Remove hover background */
-.hamburger:hover {
-  background: transparent;
-}
-
+/* 🔹 Hamburger Bars */
 .hamburger div {
   width: 30px;
   height: 3px;
   background-color: white;
   border-radius: 4px;
-  transition: 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-/* Hamburger Animation */
+/* 🔹 Remove Any Border When Clicked */
+.hamburger.open {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+/* 🔹 Fix Cross Alignment */
 .hamburger.open div:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -95,6 +101,15 @@
 .hamburger.open div:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
+/* 🔹 Remove Focus Outline on Click */
+.hamburger:focus,
+.hamburger:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+
 
 /* 🔹 Mobile Navigation */
 @media (max-width: 768px) {

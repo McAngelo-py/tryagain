@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 import "./Announcements.css";
 
-// Import images if they are in src/assets/images/
+// Importing images
 import announcement1 from "../assets/images/announcement1.jpg";
 import announcement2 from "../assets/images/announcement2.jpg";
 import announcement3 from "../assets/images/announcement3.jpg";
@@ -20,7 +20,6 @@ const announcements = [
 const Announcements = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % announcements.length);
@@ -28,7 +27,6 @@ const Announcements = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle manual pagination click
   const handlePageClick = (index) => {
     setCurrentIndex(index);
   };
@@ -37,7 +35,6 @@ const Announcements = () => {
     <div className="announcements">
       <h2 className="announcement-title">Latest Announcements</h2>
       <div className="announcement-container">
-        {/* Make the entire card clickable */}
         <Link to={announcements[currentIndex].link} className="announcement-card">
           <img
             src={announcements[currentIndex].image}
