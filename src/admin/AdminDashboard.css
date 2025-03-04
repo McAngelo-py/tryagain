@@ -1,70 +1,52 @@
-/* 🔹 Layout */
+/* Admin Dashboard Layout */
 .admin-dashboard {
-    display: flex;
-    height: 100vh;
-    background: #f8f9fa;
-  }
-  
-  /* 🔹 Sidebar */
-  .sidebar {
-    width: 250px;
-    background: #007bff;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar-menu li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar-menu button {
-    width: 100%;
-    padding: 10px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  
-  .sidebar-menu button:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  /* 🔹 Main Content */
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  flex-shrink: 0;
+  width: 250px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 250px; /* Ensures main content stays aligned with sidebar */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+
+/* Content Area */
+.dashboard-content {
+  flex-grow: 1;
+  padding:20px 20px; /* Ensures content does not overlap with fixed header */
+}
+
+/* Sidebar Hidden - Adjustments */
+.sidebar.hidden + .main-content {
+  margin-left: 0;
+}
+
+.sidebar.hidden + .main-content .admin-header {
+  left: 0;
+  width: 100%; /* Full width when sidebar is hidden */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .main-content {
-    flex: 1;
-    padding: 20px;
+      margin-left: 0;
   }
-  
+
   .admin-header {
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+      left: 0;
+      width: 100%;
   }
-  
-  .dashboard-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
+}
