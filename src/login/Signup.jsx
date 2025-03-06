@@ -7,9 +7,11 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    name: "", // Added name field
   });
 
   const [error, setError] = useState(""); // ✅ State for error message
+  const [loading, setLoading] = useState(false); // ✅ Loading state
   const navigate = useNavigate(); // ✅ Navigation hook
 
   // Handle input changes
@@ -23,7 +25,7 @@ const Signup = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // ✅ Check if passwords match
@@ -32,10 +34,38 @@ const Signup = () => {
       return;
     }
 
-    console.log("Account Created:", formData); // ✅ Simulating account creation
+    setLoading(true); // Set loading to true while submitting
 
-    // Redirect user back to homepage
-    navigate("/");
+    try {
+      // Sending the POST request to create a new user
+      const response = await fetch("http://localhost:8081/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Ensures the request body is in JSON format
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          name: formData.name, // Send the name along with the rest of the data
+          role: "user",
+          status: "Unverified"// Default role for new users
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        console.log("Account Created:", data);
+        navigate("/login"); // Redirect to login page after successful signup
+      } else {
+        setError(data.error || "An error occurred during account creation.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false); // Set loading to false after submitting
+    }
   };
 
   return (
@@ -43,6 +73,16 @@ const Signup = () => {
       <div className="signup-box">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>Name</label> {/* Added name input */}
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              required
+              onChange={handleChange}
+            />
+          </div>
           <div className="input-group">
             <label>Email</label>
             <input
@@ -74,7 +114,13 @@ const Signup = () => {
             />
           </div>
           {error && <p className="error-message">{error}</p>} {/* ✅ Display error if passwords don't match */}
-          <button type="submit" disabled={error} className="signup-btn">Create Account</button>
+          <button
+            type="submit"
+            disabled={loading || error}
+            className="signup-btn"
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </button>
         </form>
         <p className="login-text">
           Already have an account? <a href="/login">Login</a>

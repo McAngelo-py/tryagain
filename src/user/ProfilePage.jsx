@@ -1,47 +1,79 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css"; // Import CSS file
+import FirstForm from "./forms/FirstForm";
 
 // ✅ Import images
 import avatar from "../assets/avatar.jpg";
-import idPic from "../assets/idpic.png"; // Use exact case!
+import idPic from "../assets/idpic.png"; // Use exact case for the ID pic
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("Details"); // ✅ Default to "Details"
+  const [activeTab, setActiveTab] = useState("Details"); // Default to "Details"
+  const [user, setUser] = useState(null); // State for user data
   const navigate = useNavigate();
 
-  // ✅ Dummy user data (Replace with API data)
-  const user = {
-    name: "Juan Dela Cruz",
-    email: "juan@example.com",
-    profilePic: avatar,
-    idPic: idPic, // ✅ Correctly added idPic
-    status: "", // Empty status for testing
-    documents: [], // Empty documents for testing
-    benefits: [],
-  };
+  // Retrieve UserId from localStorage
+  const loggedInUserId = localStorage.getItem("UserId"); // Assuming the logged-in user's UserId is stored in localStorage
+  
+  // Fetch user details from the backend
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (!loggedInUserId) {
+        console.error("No logged-in user found");
+        return;
+      }
 
-  // ✅ Determine user status based on available data
-  const userHasData = user.name && user.email && user.documents.length > 0;
-  const status = userHasData ? "approved" : "Unverified";
+      try {
+        const response = await fetch("http://localhost:8081/getUserDetails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: loggedInUserId }), // Pass userId to fetch data
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setUser(data); // Set user details from the response
+        } else {
+          console.error("Error fetching user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [loggedInUserId]);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
+  // Get the status directly from the user object (from the backend)
+  const status = user.status || "Unverified";  
 
   const handleApplicationClick = () => {
-    navigate("/application-form", { state: { user } });
+    navigate("/firstform", { state: { user } }); // Pass user data via navigate state
   };
+  
 
   return (
     <div className="profile-container">
       {/* ✅ Profile Header */}
       <div className="profile-header">
-        <img src={user.profilePic} alt="Profile" className="profile-pic" />
-        <div>
-          <h2>{user.name || "Unverified"}</h2>
-          <p>{user.email || "Unverified"}</p>
-          <p className={`status ${status.toLowerCase()}`}>Status: {status}</p>
+        <div className="profile-header-left">
+          <img src={user.profilePic || avatar} alt="Profile" className="profile-pic" />
+          <div>
+            <h2>{user.name || "Unverified"}</h2>
+            <p>{user.email || "Unverified"}</p>
+            <p className={`status ${status.toLowerCase()}`}>Status: {status}</p> {/* Displaying the status */}
+          </div>
         </div>
-      </div>  
+      </div>
 
-      {/* ✅ Tab Navigation */}
+      {/* Tab Navigation */}
       <div className="tab-navigation">
         {["Details", "benefits", "ID"].map((tab) => (
           <button
@@ -56,39 +88,64 @@ const ProfilePage = () => {
 
       {/* ✅ Tab Content */}
       <div className="tab-content">
+        {/* Details Tab */}
         {activeTab === "Details" && (
-          <ul>
-            {user.documents.length > 0 ? (
-              user.documents.map((doc, index) => <li key={index}>{doc}</li>)
+          <div>
+            {status === "Unverified" ? (
+              <div>
+                <p>You need to send an application to become verified.</p>
+                <button className="application-button" onClick={handleApplicationClick}>
+                  Send Application
+                </button>
+              </div>
             ) : (
-              <li>Unverified</li>
+              <ul>
+                {Array.isArray(user.documents) && user.documents.length > 0 ? (
+                  user.documents.map((doc, index) => <li key={index}>{doc}</li>)
+                ) : (
+                  <li>Unverified</li>
+                )}
+              </ul>
             )}
-            {user.documents.length === 0 && (
-              <button className="application-button" onClick={handleApplicationClick}>Send Application</button>
-            )}
-          </ul>
+          </div>
         )}
+
+        {/* Benefits Tab */}
         {activeTab === "benefits" && (
-          <ul>
-            {user.benefits.length > 0 ? (
-              user.benefits.map((benefit, index) => <li key={index}>{benefit}</li>)
+          <div>
+            {status === "Unverified" ? (
+              <p>You need to send an application to become verified to see the benefits.</p>
             ) : (
-              <li>Unverified</li>
+              <ul>
+                {user.benefits && user.benefits.length > 0 ? (
+                  user.benefits.map((benefit, index) => <li key={index}>{benefit}</li>)
+                ) : (
+                  <li>Unverified</li>
+                )}
+              </ul>
             )}
-          </ul>
+          </div>
         )}
+
+        {/* ID Tab */}
         {activeTab === "ID" && (
           <div className="id-container">
-            {user.idPic ? (
-              <img src={user.idPic} alt="ID" className="id-pic" />
+            {status === "Unverified" ? (
+              <p>You need to send an application to become verified to see your ID.</p>
             ) : (
-              <p>Unverified</p>
+              <div>
+                {user.idPic ? (
+                  <img src={user.idPic} alt="ID" className="id-pic" />
+                ) : (
+                  <p>Unverified</p>
+                )}
+              </div>
             )}
           </div>
         )}
       </div>
     </div>
   );
-};
+};  
 
 export default ProfilePage;
